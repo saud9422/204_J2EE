@@ -1,0 +1,65 @@
+package com.Controller;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+public class Hospital_Main {
+	public static void main(String[] args) throws Exception {
+	Hospital_Main obj = new Hospital_Main();
+//	obj.insertData();
+//	obj.UpdateData();
+//	obj.deleteData();
+	obj.fetchData();
+		
+	}
+	
+	public void insertData() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection c= DriverManager.getConnection("jdbc:mysql://localhost:3306/batch204","root","786313");
+		PreparedStatement ps=c.prepareStatement("insert into hospital (patient_id ,patient_name,patient_age,bedno) values (?,?,?,?)");
+		ps.setInt(1, 105);
+		ps.setString(2, "Jack");
+		ps.setInt(3, 20);
+		ps.setInt(4, 15);
+		ps.executeUpdate();
+		System.out.print("Data is Inerted Sucessfully..");
+		c.close();
+	}
+	public void UpdateData() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/batch204", "root", "786313");
+		PreparedStatement ps = con.prepareStatement("update Hospital set bedno =? where patient_id =?");
+		ps.setInt(2,1);
+		ps.setInt(1,103);
+		ps.executeUpdate();
+		System.out.print("Data is Udated Sucessfully..");
+		con.close();
+	}
+
+	public void deleteData() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/batch204", "root", "786313");
+		PreparedStatement ps = con.prepareStatement("delete from hospital where patient_id=?");
+		ps.setInt(1,102);
+		ps.executeUpdate();
+		System.out.print("Data is Deleted Sucessfully..");
+		con.close();
+
+	}
+
+	public void fetchData() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/batch204", "root", "786313");
+		PreparedStatement ps = con.prepareStatement("select * from hospital");
+		ResultSet rs;
+		rs=ps.executeQuery();
+		while(rs.next()) {
+			System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getInt(3)+" "+rs.getInt(4));
+		}
+		con.close();
+
+	}
+}
