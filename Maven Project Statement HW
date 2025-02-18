@@ -1,0 +1,58 @@
+package com.Controller;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Hospital_Main1 {
+	public static void main(String[] args) throws Exception {
+		Hospital_Main obj = new Hospital_Main();
+		obj.insertData();
+		obj.UpdateData();
+		obj.deleteData();
+		obj.fetchData();
+
+	}
+
+	public void insertData() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/batch204", "root", "786313");
+		Statement s = c.createStatement();
+		s.executeUpdate("insert into Hospital values(7,'joshi',45,2)");
+		System.out.print("Data is Inerted Sucessfully..");
+		c.close();
+	}
+
+	public void UpdateData() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/batch204", "root", "786313");
+		Statement s = con.createStatement();
+		s.executeUpdate("update Hospital set bedno=8 where patient_id = 105");
+		System.out.print("Data is Udated Sucessfully..");
+		con.close();
+	}
+
+	public void deleteData() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/batch204", "root", "786313");
+		Statement s = con.createStatement();
+		s.executeUpdate("delete from Hospital where patient_id =101");
+		System.out.print("Data is Deleted Sucessfully..");
+		con.close();
+
+	}
+
+	public void fetchData() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/batch204", "root", "786313");
+		Statement s = con.createStatement();
+		ResultSet rs = s.executeQuery("select * from Hospital");
+		while (rs.next()) {
+			System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getInt(3) + " " + rs.getInt(4));
+		}
+		con.close();
+
+	}
+}
